@@ -9,7 +9,7 @@ class HiveMember:
         self.posY = y
         # Rotation: 0 Degrees means "down"
         self.rot = rot
-        self.speed = 1.5
+        self.speed = 2.5
         self.path = []
         self.visibilityRange = 50
 
@@ -22,8 +22,33 @@ class HiveMember:
 
         deltaX = math.sin(math.radians(self.rot)) * self.speed
         deltaY = math.cos(math.radians(self.rot)) * self.speed
-        self.posX += deltaX
-        self.posY += deltaY
+
+        new_x = self.posX + deltaX
+        new_y = self.posY + deltaY
+
+        # BLOCK AT WALLS
+        # if new_x > self._screen.get_width():
+        #     new_x -= abs(new_x - self._screen.get_width())
+        # elif new_x < 0:
+        #     new_x += abs(new_x)
+        # if new_y > self._screen.get_height():
+        #     new_y -= abs(new_y - self._screen.get_height())
+        # elif new_y < 0:
+        #     new_y += abs(new_y)
+
+        # SNAKE STYLE
+        if new_x > self._screen.get_width():
+            new_x -= self._screen.get_width()
+        elif new_x < 0:
+            new_x += self._screen.get_width()
+
+        if new_y > self._screen.get_height():
+            new_y -= self._screen.get_height()
+        elif new_y < 0:
+            new_y += self._screen.get_height()
+
+        self.posX = new_x
+        self.posY = new_y
 
     def draw(self):
         bodyRadius = 10
@@ -39,7 +64,7 @@ class HiveMember:
 
         # tail
         for index, point in enumerate(self.path[::-1]):
-            if index <= 500:
+            if index <= 100:
                 pygame.draw.circle(self._screen, (100, 100, 100), point, 1)
                 # pygame.draw.line(surface, color, start_pos, end_pos, width)
 

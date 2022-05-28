@@ -4,8 +4,8 @@ from member import HiveMember
 from hive import Hive
 
 pygame.init()
-screen_x = 1300
-screen_y = 1300
+screen_x = 1000
+screen_y = 1000
 screen = pygame.display.set_mode([screen_x, screen_y])
 
 clock = pygame.time.Clock()

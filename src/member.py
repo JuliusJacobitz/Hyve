@@ -1,9 +1,10 @@
+from typing import Tuple
 import pygame
 import math
 
 
 class HiveMember:
-    def __init__(self, screen, x, y, rot=0) -> None:
+    def __init__(self, screen, x, y, color: Tuple, rot=0) -> None:
         self._screen = screen
         self.posX = x
         self.posY = y
@@ -12,6 +13,7 @@ class HiveMember:
         self.speed = 2.5
         self.path = []
         self.visibilityRange = 50
+        self.color = color
 
     @property
     def position(self):
@@ -50,11 +52,9 @@ class HiveMember:
         self.posX = new_x
         self.posY = new_y
 
-    def draw(self):
+    def draw(self, draw_tail=False):
         bodyRadius = 10
-        pygame.draw.circle(
-            self._screen, (0, 0, 255), (self.posX, self.posY), bodyRadius
-        )
+        pygame.draw.circle(self._screen, self.color, (self.posX, self.posY), bodyRadius)
 
         # head
         deltaX = math.sin(math.radians(self.rot)) * bodyRadius
@@ -63,10 +63,11 @@ class HiveMember:
         pygame.draw.circle(self._screen, (255, 0, 0), headPos, bodyRadius / 2)
 
         # tail
-        for index, point in enumerate(self.path[::-1]):
-            if index <= 100:
-                pygame.draw.circle(self._screen, (100, 100, 100), point, 1)
-                # pygame.draw.line(surface, color, start_pos, end_pos, width)
+        if draw_tail:
+            for index, point in enumerate(self.path[::-1]):
+                if index <= 100:
+                    pygame.draw.circle(self._screen, (240, 240, 240), point, 1)
+                    # pygame.draw.line(surface, color, start_pos, end_pos, width)
 
         # visibility range
         pygame.draw.circle(

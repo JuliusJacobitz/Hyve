@@ -15,15 +15,32 @@ FPS = 30
 if __name__ == "__main__":
     # Create hive:
     h1 = Hive(screen=screen)
-    for i in range(60):
-        h1.members.append(
+    new_members = []
+    for i in range(20):
+        new_members.append(
             HiveMember(
                 screen,
                 random.randint(0, screen_x),
                 random.randint(0, screen_y),
+                (0, 149, 255),
                 random.randint(0, 359),
             )
         )
+    h1.members = new_members
+
+    h2 = Hive(screen=screen)
+    new_members = []
+    for i in range(20):
+        new_members.append(
+            HiveMember(
+                screen,
+                random.randint(0, screen_x),
+                random.randint(0, screen_y),
+                (255, 149, 0),
+                random.randint(0, 359),
+            )
+        )
+    h2.members = new_members
 
     # Run game:
     running = True
@@ -32,8 +49,11 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.fill((255, 255, 255))
+        screen.fill((41, 41, 41))
+
         h1.tickv2()
+        h2.tickv2()
+
         pygame.display.flip()
 
         clock.tick(FPS)

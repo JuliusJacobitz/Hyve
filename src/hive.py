@@ -10,9 +10,12 @@ class Hive:
         self._screen = screen
         self.members = members
 
-    def findNeighbours(self, member: HiveMember):
+    def findNeighbours(self, member: HiveMember, hive=None):
+        if not hive:
+            hive = self
+
         res = []
-        for neighbour in self.members:
+        for neighbour in hive.members:
             if neighbour == member:
                 continue
 
@@ -67,11 +70,3 @@ class Hive:
             member.move()
             # draw
             member.draw()
-
-    # def _draw(self):
-    #     for member in self.members:
-    #         member.draw()0
-
-    # def _move(self):
-    #     for member in self.members:
-    #         member.move()
